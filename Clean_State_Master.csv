@@ -1,0 +1,11 @@
+StateID,StateName,HospitalName,HospitalID,DiabetesCode
+S1,Andhra Pradesh,Apollo Hospitals,H1,DIA101
+S2,Telangana,Care Hospitals,H2,DIA102
+S3,Tamil Nadu,AIMS,H3,DIA103
+S4,Karnataka,Fortis Healthcare,H4,DIA104
+S5,Kerala,KIMS,H5,DIA105
+S6,Maharashtra,Max Hospital,H6,DIA106
+S7,Delhi,Manipal Hospital,H7,DIA107
+S8,Gujarat,Narayana Health,H8,DIA108
+S9,West Bengal,Medanta,H9,DIA109
+S10,Punjab,Global Hospitals,H10,DIA110
