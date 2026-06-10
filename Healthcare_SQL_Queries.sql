@@ -42,7 +42,7 @@ GROUP BY
 ORDER BY TotalAppointments DESC;    
 
 -- 6. Dense_Rank(), Over(), Partition By ni use chesi ranking cheddam then Top 3 ni ranks ni chuddam
--- (CTE approach matches perfectly in MS SQL)
+-- (CTE approach kakunda nrml ga query rasthe?)
 	-- SELECT 
 		--        UserID,
 		--        DiabetesStatus,
@@ -81,7 +81,7 @@ WITH AgeCalculation AS (
         DiabetesStatus,
         DiabetesValue,
         DATEDIFF(YEAR, UserDOB, GETDATE()) AS PatientAge
-        -- MS SQL lo DATEDIFF use chestham. Unit of Measurement (YEAR) modata untundi.
+        -- DATEDIFF use chesi uUnit of Measurement (YEAR) modata untundi.
         -- Background Math Process: SQL engine present date (GETDATE()) nunchi UserDOB ni subtract chesthundhi.
         -- Order: Chinna Date (Past/UserDOB) modata undali, Pedda Date (Present/GETDATE()) chivarlo undali, ledante age minus lo vasthundi.
     FROM Population
@@ -108,7 +108,6 @@ GROUP BY AgeGroup
 ORDER BY AvgValue;   
 
 -- 8. Top 5 best performing hospitals based on low risk rate
--- (MySQL lo unna LIMIT 5 ni tegesi, SELECT pakkana TOP 5 pettali)
 SELECT TOP 5
     S.StateName,
     S.HospitalName,
@@ -208,8 +207,8 @@ SELECT
 FROM CalculatedSlab
 ORDER BY StateName, HospitalRank;    
 
--- 12. User Age and DiabetesValue ni base cheskuni prediction cheyyali (The Master View)
--- (MS SQL requires views to be in separate batches, so GO statement mandatory)
+-- 12. User Age and DiabetesValue ni base cheskuni prediction cheyyali 
+-- (If more than views ni okesari execute chesthe then GO statement mandatory)
 GO
 CREATE OR ALTER VIEW View_KPI_To_Win_Master AS
 WITH PatientBaseMetrics AS (
@@ -259,27 +258,27 @@ SELECT
 FROM PatientBaseMetrics;
 GO
 
--- View run chesi Output check cheyadaniki (LIMIT 50 converted to TOP 50)
+-- View run chesi Output check cheyadaniki
 SELECT * FROM View_KPI_To_Win_Master 
 ORDER BY StateName;
 
 -- Adding more data
 
--- 1. Population Table loki kotha rows append cheyadam
+-- 1. Population Table loki kotha rows append cheyadam by using another file
 INSERT INTO [Population] (UserID, UserDOB, DiabetesCode, DiabetesValue, DiabetesParameter, DiabetesStatus)
 SELECT UserID, UserDOB, DiabetesCode, DiabetesValue, DiabetesParameter, DiabetesStatus 
 FROM Temp_Population;
 
 Select * From Population
 
--- 2. State Table loki kotha rows append cheyadam
+-- 2. State Table loki kotha rows append cheyadam by using another file
 INSERT INTO [State] (StateID, StateName, HospitalName, HospitalID, DiabetesCode)
 SELECT StateID, StateName, HospitalName, HospitalID, DiabetesCode 
 FROM Temp_State;
 
 Select * From State
 
--- 3. Hospital Table loki kotha rows append cheyadam
+-- 3. Hospital Table loki kotha rows append cheyadam by using another file
 INSERT INTO [Hospital] (HospitalID, UserID, ApptDate, ApptTime, DoctorID, DiabetesStatus)
 SELECT HospitalID, UserID, ApptDate, ApptTime, DoctorID, DiabetesStatus 
 FROM Temp_Hospital;
@@ -288,11 +287,13 @@ Select * From Hospital
 Select * From State
 Select * From Population
 
--- Manipulating the data
+-- Deleting the new files bcoz manam data ni insert cheskunnam kabatti inko ah new files akkarledu
 
 Drop Table Temp_Population;
 Drop Table Temp_State;
 Drop Table Temp_Hospital;
+
+-- Wrong ga unna data ni Update and Set use chesi change cheyyatam
 
 Update [State]
 Set StateID = 'S11', StateName = 'Odisha'
