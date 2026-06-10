@@ -4,4 +4,5 @@ End-to-End Data Analytics project automating healthcare data pipeline using Pyth
 ##  Tech Stack & Analytical Ecosystem
 * **ETL Ingestion Engine:** Python (Pandas)
 * **Relational Database Server:** Microsoft SQL Server (SSMS)
-* **Business Intelligence Tool:** Power BI Desktop
+* **Business Intelligence & Data Visualization:** Power BI Desktop
+* **Data Extraction & Ingestion (ETL):** Microsoft Excel, CSV
